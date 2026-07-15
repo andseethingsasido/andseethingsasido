@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
     <style>
-        /* 全黑背景，并让视频完美居中 */
+        /* 纯黑背景，且让 GIF 居中 */
         html, body {
             margin: 0;
             padding: 0;
@@ -16,49 +16,29 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            cursor: pointer; /* 鼠标悬停时变成“手型”，提示用户可以点击 */
+            cursor: pointer; /* 鼠标变成手型，提示可以点击 */
         }
 
-        /* 视频样式：自适应屏幕大小，保持比例 */
-        video {
+        /* GIF 样式：自适应屏幕，保持高清比例 */
+        img {
             max-width: 90%;
             max-height: 90%;
             border-radius: 4px;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-            outline: none;
+            user-select: none; /* 防止长按或拖拽图片 */
+            -webkit-user-drag: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- 
-      src="video.mp4" 是你的视频文件名
-      如果你的视频文件不叫 video.mp4，请记得把下面这行的名字改成你真实的视频文件名（注意大小写）
-    -->
-    <video id="myVideo" src="https://assets.mixkit.co/videos/preview/mixkit-playing-in-the-snow-1800-large.mp4" loop muted autoplay playsinline></video>
+    <!-- 已经帮你精准对应了你上传的 and666.gif 文件名 -->
+    <img id="bgGif" src="and666.gif" alt="Live View">
 
     <script>
-        const video = document.getElementById('myVideo');
-        let hasPlayed = false;
-
-        // 尝试在页面加载时自动播放（静音状态）
-        window.addEventListener('load', () => {
-            video.play().catch(err => {
-                console.log("自动播放被浏览器拦截，等待用户首次点击激活");
-            });
-        });
-
-        // 监听整个页面的点击事件
+        // 只要点击页面的任何地方，就会立刻丝滑跳转
         document.body.addEventListener('click', function() {
-            if (!hasPlayed) {
-                // 【第一次点击】：解除静音，开启声音并强行播放
-                video.muted = false; 
-                video.play();
-                hasPlayed = true;   // 标记视频已经成功播放出声音
-            } else {
-                // 【第二次点击】：跳转到你的第二个新网页仓库
-                window.location.href = "https://andseethingsasido.github.io/page2/"; 
-            }
+            window.location.href = "https://andseethingsasido.github.io/page2/"; 
         });
     </script>
 
