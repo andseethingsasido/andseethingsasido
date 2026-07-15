@@ -2,10 +2,10 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Welcome</title>
     <style>
-        /* 纯黑背景，且让 GIF 居中 */
+        /* 1. 核心布局修改 */
         html, body {
             margin: 0;
             padding: 0;
@@ -13,27 +13,32 @@
             height: 100%;
             background-color: #000000;
             display: flex;
+            flex-direction: column; /* 垂直排列 */
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            cursor: pointer; /* 鼠标变成手型，提示可以点击 */
+            cursor: pointer; /* 全页面点击提示手型 */
         }
 
-        /* GIF 样式：自适应屏幕，保持高清比例 */
+        /* 2. 图片通用样式修改 */
         img {
-            max-width: 90%;
-            max-height: 90%;
+            max-width: 80%;  /* 调整图片最大宽度 */
+            max-height: 45%; /* 防止两张图加起来把屏幕撑爆 */
             border-radius: 4px;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-            user-select: none; /* 防止长按或拖拽图片 */
+            user-select: none;
             -webkit-user-drag: none;
+            margin: 10px 0; /* 上下两张图之间留出 10 像素的全黑空隙 */
         }
     </style>
 </head>
 <body>
 
-    <!-- 已经帮你精准对应了你上传的 and666.gif 文件名 -->
-    <img id="bgGif" src="and666.gif" alt="Live View">
+    <!-- 顶层的 GIF -->
+    <img id="gifTop" src="and666.gif" alt="Live View Top">
+
+    <!-- 底层的 GIF （已为你精准修改为 and777.gif） -->
+    <img id="gifBottom" src="and777.gif" alt="Live View Bottom">
 
     <script>
         // 只要点击页面的任何地方，就会立刻丝滑跳转
