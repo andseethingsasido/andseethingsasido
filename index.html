@@ -32,19 +32,33 @@
 <body>
 
     <!-- 
-      src="video.mp4" 是你的视频文件名（确保和你上传的名字完全一致）
-      loop: 循环播放
-      muted: 静音（现代浏览器规定：只有静音的视频才允许在网页打开时“自动播放”）
-      autoplay: 自动播放
-      playsinline: 防止手机端全屏弹窗播放，保持在网页内
+      src="video.mp4" 是你的视频文件名
+      如果你的视频文件不叫 video.mp4，请记得把下面这行的名字改成你真实的视频文件名（注意大小写）
     -->
     <video id="myVideo" src="video.mp4" loop muted autoplay playsinline></video>
 
     <script>
-        // 绑定点击事件：点击网页的任何地方（包括视频本身），就会跳转
+        const video = document.getElementById('myVideo');
+        let hasPlayed = false;
+
+        // 尝试在页面加载时自动播放（静音状态）
+        window.addEventListener('load', () => {
+            video.play().catch(err => {
+                console.log("自动播放被浏览器拦截，等待用户首次点击激活");
+            });
+        });
+
+        // 监听整个页面的点击事件
         document.body.addEventListener('click', function() {
-            // 将下方的网址改为你想跳转的“新网页”地址
-            window.location.href = "https://andseethingsasido.github.io/and666/"; 
+            if (!hasPlayed) {
+                // 【第一次点击】：解除静音，开启声音并强行播放
+                video.muted = false; 
+                video.play();
+                hasPlayed = true;   // 标记视频已经成功播放出声音
+            } else {
+                // 【第二次点击】：跳转到你的第二个新网页仓库
+                window.location.href = "https://andseethingsasido.github.io/page2/"; 
+            }
         });
     </script>
 
