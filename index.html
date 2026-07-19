@@ -8,8 +8,8 @@
 html,body{margin:0;padding:0;background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:flex;flex-direction:column;align-items:center;overflow-y:auto;scroll-behavior:smooth}
 img{user-select:none;-webkit-user-drag:none}
 
-/* 页面顶部内边距，适应固定 Header */
-body { padding-top: 140px; padding-bottom: 24px; }
+/* 页面顶部内边距同步缩减，适应更紧凑的 Header */
+body { padding-top: 85px; padding-bottom: 24px; }
 
 #gifTop{width:80%;max-width:900px;border-radius:6px;box-shadow:0 0 20px rgba(255,255,255,.12);margin:12px 0}
 @media(min-width:769px){#gifTop{width:53%;max-width:600px}}
@@ -22,7 +22,7 @@ body { padding-top: 140px; padding-bottom: 24px; }
     top: 0;
     left: 0;
     width: 100%;
-    height: 110px;
+    height: 65px; /* 标题栏高度同步缩减 */
     background: transparent;
     display: flex;
     justify-content: flex-start;
@@ -32,18 +32,17 @@ body { padding-top: 140px; padding-bottom: 24px; }
     padding: 0 40px;
 }
 
-/* 靠左大 Logo - 替换为 logo.png */
+/* 靠左大 Logo - 精准缩小至三分之一 */
 .logo-btn {
-    height: 90px;
+    height: 30px; /* 从 90px 缩小至 30px */
     width: auto;
     cursor: pointer;
     position: relative;
     z-index: 10003;
-    /* 引入滤镜过渡，用于反差色平滑切换 */
     transition: transform 0.3s, filter 0.3s; 
 }
 .logo-btn:hover {
-    transform: scale(1.02);
+    transform: scale(1.05);
 }
 
 /* 菜单激活时，Logo 变为反差色 */
@@ -56,7 +55,7 @@ body { padding-top: 140px; padding-bottom: 24px; }
     position: absolute;
     right: 40px;
     top: 0;
-    height: 110px;
+    height: 65px; /* 触发区域高度与 header 保持一致 */
     display: flex;
     align-items: center;
     z-index: 10002;
@@ -98,7 +97,7 @@ body { padding-top: 140px; padding-bottom: 24px; }
     
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     box-sizing: border-box;
-    padding: 130px 40px 50px; /* 留出下方舒适的余量空间 */
+    padding: 95px 40px 45px; /* 顶部内边距同步缩减，防止菜单项掉得太深 */
     z-index: 10001;
     display: flex;
     justify-content: center; 
@@ -119,9 +118,9 @@ body { padding-top: 140px; padding-bottom: 24px; }
     text-align: center; 
 }
 .menu-item {
-    font-size: 15px; /* 缩小了三分之一，精细内敛 */
-    font-weight: 400; /* 调细字重 */
-    letter-spacing: 4px; /* 保持高级的字母呼吸间距 */
+    font-size: 15px; 
+    font-weight: 400; 
+    letter-spacing: 4px; 
     color: #555; 
     cursor: pointer;
     transition: color 0.3s, transform 0.3s;
@@ -169,7 +168,7 @@ body { padding-top: 140px; padding-bottom: 24px; }
 
 <!-- ✟ ERD 顶部导航栏 ✟ -->
 <div id="header">
-    <!-- 1. 替换为 logo.png -->
+    <!-- 靠左大 Logo (高度已调至 30px) -->
     <img src="logo.png" class="logo-btn" id="logoBtn" onclick="location.href='https://andseethingsasido.github.io/'">
     
     <!-- 右侧三条杠 -->
@@ -215,7 +214,7 @@ body { padding-top: 140px; padding-bottom: 24px; }
 gifBottom.onclick=()=>location.href="https://andseethingsasido.github.io/and666/";
 
 // ==========================================
-// 🛠️ 交互控制引擎
+// 🛠 *交互控制引擎*
 // ==========================================
 const trigger = document.getElementById('menuTrigger');
 const menu = document.getElementById('dropdown-menu');
@@ -224,23 +223,22 @@ const logo = document.getElementById('logoBtn');
 let isHoveringTrigger = false;
 let isHoveringMenu = false;
 let isHoveringLogo = false;
-let isClickOpen = false; // 标记是否是通过点击打开的
+let isClickOpen = false;
 
 function openMenu() {
     menu.classList.add('show');
     trigger.classList.add('active');
-    logo.classList.add('active'); // Logo 变反差色
+    logo.classList.add('active');
 }
 
 function closeMenu() {
     menu.classList.remove('show');
     trigger.classList.remove('active');
-    logo.classList.remove('active'); // Logo 恢复原色
+    logo.classList.remove('active');
     isClickOpen = false;
 }
 
 function checkMenuStatus() {
-    // 缓冲缝隙体验
     setTimeout(() => {
         if (!isHoveringTrigger && !isHoveringMenu && !isHoveringLogo && !isClickOpen) {
             closeMenu();
@@ -248,7 +246,7 @@ function checkMenuStatus() {
     }, 50);
 }
 
-// 2. 监听 Logo 触碰（悬停不取消）
+// 监听 Logo 触碰
 logo.addEventListener('mouseenter', () => {
     isHoveringLogo = true;
     if (menu.classList.contains('show')) {
@@ -270,9 +268,9 @@ trigger.addEventListener('mouseleave', () => {
     checkMenuStatus();
 });
 
-// 4. 点击三条杠逻辑（切换开关状态）
+// 点击三条杠逻辑
 trigger.addEventListener('click', (e) => {
-    e.stopPropagation(); // 阻止事件冒泡
+    e.stopPropagation();
     if (menu.classList.contains('show') && isClickOpen) {
         closeMenu();
     } else {
@@ -290,7 +288,7 @@ menu.addEventListener('mouseleave', () => {
     checkMenuStatus();
 });
 
-// 点击主页空白处时，如果菜单是点击打开的，则自动收起
+// 点击空白处收起
 document.addEventListener('click', (e) => {
     if (isClickOpen && !menu.contains(e.target) && !trigger.contains(e.target)) {
         closeMenu();
