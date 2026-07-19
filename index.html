@@ -60,7 +60,6 @@ img{user-select:none;-webkit-user-drag:none}
 .menu-trigger-icon span {
     display: block;
     width: 100%;
-    height: 1.2px; /* 微调线条粗细，更显精致 */
     background: #fff;
     transition: background 0.3s;
 }
@@ -80,7 +79,7 @@ img{user-select:none;-webkit-user-drag:none}
     box-sizing: border-box;
     z-index: 10001;
     display: flex;
-    justify-content: center; 
+    justify-content: flex-end; /* 🛠 更改为右对齐 */
 }
 #dropdown-menu.show {
     transform: translateY(0);
@@ -94,7 +93,8 @@ img{user-select:none;-webkit-user-drag:none}
     #header { height: 40px; }
     .logo-btn { height: 20px; } 
     .menu-trigger { height: 40px; }
-    .menu-trigger-icon { width: 16px; height: 10px; } /* 缩小三条杠整体尺寸，契合 20px Logo */
+    .menu-trigger-icon { width: 16px; height: 10px; }
+    .menu-trigger-icon span { height: 1.2px; } /* 移动端保持极细线条 */
     #dropdown-menu { padding: 65px 40px 35px; }
 }
 
@@ -107,7 +107,9 @@ img{user-select:none;-webkit-user-drag:none}
     #header { height: 55px; }
     .logo-btn { height: 35px; } 
     .menu-trigger { height: 55px; }
-    .menu-trigger-icon { width: 19px; height: 12px; } /* 缩小三条杠整体尺寸，契合 35px Logo */
+    /* 🛠 优化 PC 端三条杠整体宽高与粗细，使其粗细绝对一致且与 35px Logo 的视觉重量对齐 */
+    .menu-trigger-icon { width: 20px; height: 13px; } 
+    .menu-trigger-icon span { height: 1.5px; } 
     #dropdown-menu { padding: 85px 40px 35px; }
 }
 
@@ -116,7 +118,7 @@ img{user-select:none;-webkit-user-drag:none}
     display: flex;
     flex-direction: column;
     gap: 20px; 
-    text-align: center; 
+    text-align: right; /* 🛠 文字内容也同步修改为右对齐 */
 }
 .menu-item {
     font-size: 15px; 
@@ -127,6 +129,7 @@ img{user-select:none;-webkit-user-drag:none}
     transition: color 0.3s, transform 0.3s;
     text-transform: uppercase;
     white-space: nowrap;
+    transform-origin: right center; /* 🛠 悬停缩放时保持右侧对齐不偏移 */
 }
 .menu-item:hover {
     color: #000; 
@@ -159,7 +162,7 @@ img{user-select:none;-webkit-user-drag:none}
     background: rgba(255, 255, 255, 0.03);
 }
 
-/* 弹窗遮罩 🛠 彻底删除 backdrop-filter 虚化，仅保留暗化纯色 */
+/* 弹窗遮罩 */
 #mask {display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);justify-content:center;align-items:center;z-index:100003}
 
 /* 弹出卡片样式 */
@@ -189,7 +192,6 @@ img{user-select:none;-webkit-user-drag:none}
     
     <div id="dropdown-menu" id="dropdownMenu">
         <div class="menu-links">
-            <!-- 🛠 点击时同步调用 closeMenu() 隐藏菜单栏 -->
             <div class="menu-item" onclick="closeMenu();location.href='https://andseethingsasido.github.io/and666/'">商店</div>
             <div class="menu-item" onclick="closeMenu();mask.style.display='flex'">公众号</div>
         </div>
