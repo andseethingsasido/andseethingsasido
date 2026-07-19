@@ -12,13 +12,12 @@ img{user-select:none;-webkit-user-drag:none}
 #gifBottom{max-width:80%;max-height:45vh;border-radius:6px;box-shadow:0 0 20px rgba(255,255,255,.12);margin:12px 0;cursor:pointer}
 #dao{width:80%;max-width:900px;margin:24px 0 40px;box-shadow:none;border-radius:0}
 
-/* ✟ 先锋重工可拖拽伸展 Dock 栏 ✟ */
+/* ✟ 极简暗黑伸展 Dock 栏 ✟ */
 #dock {
     position: fixed;
     left: 24px;
     top: 30%;
-    /* 鼠标不在时也显示背景和模糊，强化3D立体感，不搞太“淡雅” */
-    background: rgba(10, 10, 12, 0.8); 
+    background: rgba(15, 15, 18, 0.85);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -29,25 +28,24 @@ img{user-select:none;-webkit-user-drag:none}
     gap: 12px;
     z-index: 999;
     width: 62px;
-    /* 初始高度计算：10 padding*2 + 62 item height = 82px，精确裁剪隐藏文字按钮 */
+    /* 10px padding*2 + 62px 照片框 = 82px 初始高度，确保只露出第一张照片 */
     height: 82px; 
     overflow: hidden;
     cursor: move;
-    transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, backdrop-filter 0.3s, border-color 0.3s;
+    box-sizing: border-box;
+    transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 鼠标悬停时展开显示全貌 */
+/* 鼠标放过去后展开全貌 */
 #dock:hover {
-    /* 展开高度计算：3*62 item + 2*12 gap + 2*10 padding = 230px */
+    /* 3个项目*62px + 2个间距*12px + 2个内边距*10px = 230px */
     height: 230px; 
-    background: rgba(4, 4, 5, 0.98);
-    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .item {
     width: 62px;
     height: 62px;
-    border-radius: 0px; /* 直角 */
+    border-radius: 0px;
     background: #111113;
     border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
@@ -55,7 +53,6 @@ img{user-select:none;-webkit-user-drag:none}
     align-items: center;
     cursor: pointer;
     overflow: hidden;
-    transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.2s, opacity 0.3s;
     color: #fff;
     font-size: 13px;
     font-weight: 300;
@@ -63,41 +60,30 @@ img{user-select:none;-webkit-user-drag:none}
     writing-mode: vertical-lr;
     text-orientation: mixed;
     box-sizing: border-box; 
-    opacity: 1; /* 初始全部不透明 */
+    flex-shrink: 0; /* 防止展开动画期间内容受到挤压 */
 }
 
-/* 初始状态下，隐藏文字按钮部分 */
-#dock .item:not(:first-child) {
-    opacity: 0;
-}
-/* 悬停时显示文字按钮 */
-#dock:hover .item {
-    opacity: 1;
-}
-
-/* 文字按钮的 Hover 效果 */
-#dock .item:not(:first-child):hover {
+/* 文字按钮的悬停反色效果 */
+.item:not(:first-child):hover {
     background: #fff;
     color: #000;
     border-color: #fff;
 }
 
+/* 核心照片：不压缩、无滤镜 */
 .item img {
     width: 100%;
     height: 100%;
-    /* 关键修改：contain 确保照片在容器内原比例显示，不裁剪，不拉伸（不压缩），完整展示 */
-    object-fit: contain; 
-    /* 彻底去除可能存在的任何滤镜，保留原照片效果 */
-    filter: none !important;
+    object-fit: contain; /* 完整展示不裁剪不拉伸 */
+    filter: none !important; /* 保留照片原本效果 */
 }
 
-/* A-F 3个一组矩阵 - 恢复 3 列布局 */
+/* A-F 3个一组矩阵 */
 .brand-section {
     width: 80%;
     max-width: 900px;
     margin: 20px 0 60px;
     display: grid;
-    /* 强制横向 3 列一组，维持原来的大小和间距风格 */
     grid-template-columns: repeat(3, 1fr); 
     gap: 15px; 
 }
@@ -118,7 +104,7 @@ img{user-select:none;-webkit-user-drag:none}
     background: rgba(255, 255, 255, 0.03);
 }
 
-/* 弹窗黑化与滤镜设置保持原样 */
+/* 弹窗遮罩 */
 #mask {display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(15px);justify-content:center;align-items:center;z-index:9999}
 #card {background:#0a0a0c;padding:30px;border-radius:0px;border:1px solid rgba(255,255,255,0.2);position:relative}
 #card img {width:min(80vw,320px);filter: grayscale(100%); transition: filter 0.3s}
@@ -130,7 +116,7 @@ img{user-select:none;-webkit-user-drag:none}
 
 <!-- ✟ 先锋重工可拖拽伸展 Dock ✟ -->
 <div id="dock">
-<div class="item"><img src="and.png"></div> <!-- 照片更名为 and.png 且已优化显示不压缩无滤镜 -->
+<div class="item"><img src="and.png"></div> <!-- 初始仅展示它，原汁原味 -->
 <div class="item" onclick="location.href='https://andseethingsasido.github.io/and666/'">商品</div>
 <div class="item" onclick="mask.style.display='flex'">公众号</div>
 </div>
@@ -139,7 +125,7 @@ img{user-select:none;-webkit-user-drag:none}
 <img id="gifBottom" src="and777.gif">
 <img id="dao" src="dao.png">
 
-<!-- A-F 强制3列一组矩阵 -->
+<!-- A-F 矩阵 -->
 <div class="brand-section">
     <div class="brand-tag">A</div>
     <div class="brand-tag">B</div>
@@ -167,36 +153,25 @@ let hasMoved = false;
 function dragStart(e) {
     hasMoved = false;
     isDragging = true;
-    
-    // 兼容触屏和鼠标获取 clientX/Y
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    
     const rect = dock.getBoundingClientRect();
     startX = clientX;
     startY = clientY;
     initialLeft = rect.left;
     initialTop = rect.top;
-    
-    // 拖动时临时关闭过渡动画，保证跟随感
     dock.style.transition = 'none';
 }
 
 function dragMove(e) {
     if (!isDragging) return;
-    
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    
     const dx = clientX - startX;
     const dy = clientY - startY;
-    
-    // 允许微小位移（抖动阈值），超过该位移才认定为拖拽
     if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
         hasMoved = true;
     }
-    
-    // 计算移动后坐标并应用
     dock.style.left = (initialLeft + dx) + 'px';
     dock.style.top = (initialTop + dy) + 'px';
 }
@@ -204,22 +179,15 @@ function dragMove(e) {
 function dragEnd(e) {
     if (!isDragging) return;
     isDragging = false;
-    
-    // 拖动结束恢复展开过渡动画
-    dock.style.transition = 'height 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, backdrop-filter 0.3s, border-color 0.3s';
-    
-    // 如果明显的发生了位移，在脚本触发层面阻止点击逻辑
+    dock.style.transition = 'height 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
     if (hasMoved) {
         e.preventDefault();
     }
 }
 
-// 绑定鼠标事件
 dock.addEventListener('mousedown', dragStart);
 document.addEventListener('mousemove', dragMove);
 document.addEventListener('mouseup', dragEnd);
-
-// 绑定触屏事件
 dock.addEventListener('touchstart', dragStart, { passive: true });
 document.addEventListener('touchmove', dragMove, { passive: false });
 document.addEventListener('touchend', dragEnd);
