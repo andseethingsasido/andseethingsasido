@@ -1,0 +1,142 @@
+<!-- ==========================================================
+   ✟ GOTHIC MINK HANDHELD NAVIGATION HEADER ✟
+   ========================================================== -->
+
+<!-- 1. 结构层 (HTML) -->
+<header id="header">
+    <!-- 动态解析：Logo 按钮 -->
+    <img class="logo-btn" 
+         src="{{ '/images/logo.png' | relative_url }}" 
+         alt="LOGO" 
+         onclick="window.location.href='{{ '/' | relative_url }}'">
+
+    <!-- 右侧汉堡菜单触发器 -->
+    <div class="menu-trigger" id="menuTrigger" onclick="toggleMenu()">
+        <div class="menu-trigger-icon">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- 全屏/下拉遮罩菜单 -->
+    <nav id="dropdown-menu">
+        <div class="menu-links">
+            <span class="menu-item" onclick="window.location.href='{{ '/' | relative_url }}'">HOME</span>
+            <span class="menu-item" onclick="openWeChatCard()">WECHAT</span>
+            <span class="menu-item" onclick="window.location.href='{{ '/archive.html' | relative_url }}'">ARCHIVE</span>
+        </div>
+    </nav>
+</header>
+
+<!-- 2. 样式层 (CSS) - 完美内嵌，引入即生效 -->
+<style>
+    #header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: transparent;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        z-index: 10000;
+        box-sizing: border-box;
+        padding: 0 40px;
+    }
+
+    .logo-btn {
+        width: auto;
+        cursor: pointer;
+        position: relative;
+        z-index: 10003;
+        transition: transform 0.3s, filter 0.3s; 
+    }
+    .logo-btn:hover { transform: scale(1.03); }
+    .logo-btn.active { filter: invert(1); }
+
+    .menu-trigger {
+        position: absolute;
+        right: 40px;
+        top: 0;
+        display: flex;
+        align-items: center;
+        z-index: 10002;
+        cursor: pointer;
+    }
+    .menu-trigger-icon { display: flex; flex-direction: column; }
+    .menu-trigger-icon span { display: block; width: 100%; background: #fff; transition: background 0.3s; }
+    .menu-trigger.active .menu-trigger-icon span { background: #000; }
+
+    #dropdown-menu {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        transform: translateY(-100%); 
+        background: #fff; 
+        transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        box-sizing: border-box;
+        z-index: 10001;
+        display: flex;
+        justify-content: flex-end; 
+    }
+    #dropdown-menu.show { transform: translateY(0); }
+
+    .menu-links { display: flex; flex-direction: column; gap: 20px; }
+    .menu-item {
+        font-family: "Cinzel", "Didot", "Helvetica Neue", Arial, sans-serif;
+        font-size: 18px; 
+        font-weight: 600; 
+        letter-spacing: 6px; 
+        color: #555; 
+        cursor: pointer;
+        transition: color 0.3s, transform 0.3s;
+        text-transform: uppercase;
+        white-space: nowrap;
+        transform-origin: right center; 
+    }
+    .menu-item:hover { color: #000; transform: scale(1.03); }
+
+    /* 响应式断点控制 */
+    @media (max-width: 768px) {
+        #header { height: 40px; padding: 0 20px; }
+        .logo-btn { height: 20px; } 
+        .menu-trigger { height: 40px; right: 20px; }
+        .menu-trigger-icon { width: 16px; }
+        .menu-trigger-icon span { height: 1px; margin-bottom: 4px; }
+        .menu-trigger-icon span:last-child { margin-bottom: 0; }
+        #dropdown-menu { padding: 65px 20px 35px; }
+    }
+    @media (min-width: 769px) {
+        #header { height: 55px; }
+        .logo-btn { height: 35px; } 
+        .menu-trigger { height: 55px; }
+        .menu-trigger-icon { width: 22px; } 
+        .menu-trigger-icon span { height: 2px; margin-bottom: 4px; } 
+        .menu-trigger-icon span:last-child { margin-bottom: 0; }
+        #dropdown-menu { padding: 85px 40px 35px; }
+    }
+</style>
+
+<!-- 3. 行为层 (JavaScript) -->
+<script>
+    function toggleMenu() {
+        const trigger = document.getElementById('menuTrigger');
+        const menu = document.getElementById('dropdown-menu');
+        const logo = document.querySelector('.logo-btn');
+        
+        trigger.classList.toggle('active');
+        menu.classList.toggle('show');
+        if(logo) logo.classList.toggle('active');
+    }
+
+    function openWeChatCard() {
+        // 先关闭菜单
+        toggleMenu();
+        // 唤起主页面上的公共遮罩弹窗
+        const mask = document.getElementById('mask');
+        if (mask) {
+            mask.style.display = 'flex';
+        }
+    }
+</script>
