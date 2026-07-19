@@ -8,8 +8,8 @@
 html,body{margin:0;padding:0;background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:flex;flex-direction:column;align-items:center;overflow-y:auto;scroll-behavior:smooth}
 img{user-select:none;-webkit-user-drag:none}
 
-/* 1. 增加页面顶部内边距，适应加高的 Header */
-body { padding-top: 130px; padding-bottom: 24px; }
+/* 页面顶部内边距，适应固定 Header */
+body { padding-top: 140px; padding-bottom: 24px; }
 
 #gifTop{width:80%;max-width:900px;border-radius:6px;box-shadow:0 0 20px rgba(255,255,255,.12);margin:12px 0}
 @media(min-width:769px){#gifTop{width:53%;max-width:600px}}
@@ -22,47 +22,42 @@ body { padding-top: 130px; padding-bottom: 24px; }
     top: 0;
     left: 0;
     width: 100%;
-    /* 1. 将 Header 高度从 80px 增加到 110px 以容纳放大的 Logo */
     height: 110px;
     background: transparent;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* 1. 改为左对齐，让 Logo 靠左 */
     align-items: center;
     z-index: 10000;
     box-sizing: border-box;
     padding: 0 40px;
-    transition: background 0.3s;
 }
 
-/* 中间核心 Logo */
+/* 靠左大 Logo */
 .logo-btn {
-    /* 1. Logo 高度放大一倍，从 45px 变为 90px，等比例放大 */
     height: 90px;
-    width: auto; /* 确保等比例 */
+    width: auto;
     cursor: pointer;
     transition: transform 0.3s;
     position: relative;
     z-index: 10003;
 }
 .logo-btn:hover {
-    transform: scale(1.03);
+    transform: scale(1.02);
 }
 
-/* 汉堡菜单悬停区 */
+/* 右侧汉堡菜单悬停区 */
 .menu-trigger {
     position: absolute;
     right: 40px;
     top: 0;
-    /* 1. 悬停高度适应新的 Header */
     height: 110px;
     display: flex;
     align-items: center;
     z-index: 10002;
     cursor: pointer;
 }
-/* 三条杠图标容器 */
 .menu-trigger-icon {
-    width: 20px;
+    width: 22px;
     height: 14px;
     display: flex;
     flex-direction: column;
@@ -71,19 +66,24 @@ body { padding-top: 130px; padding-bottom: 24px; }
 .menu-trigger-icon span {
     display: block;
     width: 100%;
-    height: 1px;
+    height: 1.5px;
     background: #fff;
-    /* 过渡效果保留 */
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s, background 0.3s;
+    transition: background 0.3s;
 }
 
-/* ✟ 横向铺满最顶端的下拉菜单栏 ✟ */
+/* 当激活菜单时，三条杠变黑以适应白色背景 */
+.menu-trigger.active .menu-trigger-icon span {
+    background: #000;
+}
+
+/* ✟ 横向铺满全屏的下拉菜单栏 ✟ */
 #dropdown-menu {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     
+    /* 初始完全缩回并隐藏 */
     visibility: hidden;
     opacity: 0;
     transform: translateY(-100%); 
@@ -92,49 +92,39 @@ body { padding-top: 130px; padding-bottom: 24px; }
     
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     box-sizing: border-box;
-    /* 1. 顶部 padding 增加，防止在 110px Header 上方显示 */
-    padding: 130px 10% 40px; 
+    padding: 130px 40px 50px; /* 留出下方舒适的余量空间 */
     z-index: 10001;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center; /* 3. 菜单内容完美居中铺满 */
 }
 
-/* ✟ 核心逻辑修改 ✟ */
-
-/* 2. 只有鼠标放在三条杠 (.menu-trigger) 上时才弹出菜单 */
-.menu-trigger:hover ~ #dropdown-menu {
+/* 激活状态下的菜单栏样式 */
+#dropdown-menu.show {
     visibility: visible;
     opacity: 1;
     transform: translateY(0);
 }
 
-/* 3. 弹出菜单后，三条杠变色适应白色背景，但移除变为 ✕ 的动画 */
-.menu-trigger:hover .menu-trigger-icon span {
-    background: #000;
-}
-
-/* >>> 原有的 ✕ 形变动画代码已被删除 <<< */
-
-/* 菜单内部按钮 */
+/* 菜单内部按钮载体 */
 .menu-links {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    text-align: right;
+    gap: 20px;
+    text-align: center; /* 3. 按钮文字水平居中 */
 }
 .menu-item {
-    font-size: 14px;
-    font-weight: 300;
-    letter-spacing: 1px;
-    color: #666;
+    font-size: 22px; /* 3. 字体显著放大 */
+    font-weight: 600; /* 3. 字重加粗 */
+    letter-spacing: 3px; /* 高级独立站呼吸感字间距 */
+    color: #555; /* 优雅深灰，悬停突显 */
     cursor: pointer;
     transition: color 0.3s, transform 0.3s;
     text-transform: uppercase;
     white-space: nowrap;
 }
 .menu-item:hover {
-    color: #000;
-    transform: translateX(-3px);
+    color: #000; /* 悬停变为纯黑 */
+    transform: scale(1.05); /* 悬停时微微放大 */
 }
 
 /* A-F 矩阵 */
@@ -168,17 +158,16 @@ body { padding-top: 130px; padding-bottom: 24px; }
 #card {background:#0a0a0c;padding:30px;border-radius:0px;border:1px solid rgba(255,255,255,0.2);position:relative}
 #card img {width:min(80vw,320px);filter: grayscale(100%); transition: filter 0.3s}
 #card img:hover {filter: grayscale(0%)}
-/* 4. 移除了 #close ✕ 号的相关样式 */
-
 </style></head>
 <body>
 
-<!-- ✟ ERD 透明顶部导航栏 ✟ -->
+<!-- ✟ ERD 顶部导航栏 ✟ -->
 <div id="header">
+    <!-- 左对齐放大 Logo -->
     <img src="and.png" class="logo-btn" onclick="location.href='https://andseethingsasido.github.io/'">
     
-    <!-- 2. 菜单悬停区 - 只有悬停在这里才会触发菜单和变色 -->
-    <div class="menu-trigger">
+    <!-- 右侧三条杠 -->
+    <div class="menu-trigger" id="menuTrigger">
         <div class="menu-trigger-icon">
             <span></span>
             <span></span>
@@ -186,8 +175,8 @@ body { padding-top: 130px; padding-bottom: 24px; }
         </div>
     </div>
     
-    <!-- ✟ 下拉菜单栏 ✟ -->
-    <div id="dropdown-menu">
+    <!-- 横向铺满下拉菜单栏 -->
+    <div id="dropdown-menu" id="dropdownMenu">
         <div class="menu-links">
             <div class="menu-item" onclick="location.href='https://andseethingsasido.github.io/and666/'">商品</div>
             <div class="menu-item" onclick="mask.style.display='flex'">公众号</div>
@@ -212,13 +201,52 @@ body { padding-top: 130px; padding-bottom: 24px; }
 <!-- 公众号弹窗 -->
 <div id="mask" onclick="if(event.target===this)this.style.display='none'">
     <div id="card">
-        <!-- 4. 已删除原有的右上角 ✕ 号元素 -->
         <img src="gozhonghao.jpg">
     </div>
 </div>
 
 <script>
 gifBottom.onclick=()=>location.href="https://andseethingsasido.github.io/and666/";
+
+// ==========================================
+// 🛠️ 先锋极简防断联悬停引擎（纯原生 JS）
+// ==========================================
+const trigger = document.getElementById('menuTrigger');
+const menu = document.getElementById('dropdown-menu');
+
+let isHoveringTrigger = false;
+let isHoveringMenu = false;
+
+// 检查是否应当关闭菜单
+function checkMenuStatus() {
+    // 采用 setTimeout 缓冲，给鼠标提供跨越临界缝隙的顺滑物理体验
+    setTimeout(() => {
+        if (!isHoveringTrigger && !isHoveringMenu) {
+            menu.classList.remove('show');
+            trigger.classList.remove('active');
+        }
+    }, 50);
+}
+
+// 监听三条杠触碰
+trigger.addEventListener('mouseenter', () => {
+    isHoveringTrigger = true;
+    menu.classList.add('show');
+    trigger.classList.add('active');
+});
+trigger.addEventListener('mouseleave', () => {
+    isHoveringTrigger = false;
+    checkMenuStatus();
+});
+
+// 监听白色菜单栏触碰
+menu.addEventListener('mouseenter', () => {
+    isHoveringMenu = true;
+});
+menu.addEventListener('mouseleave', () => {
+    isHoveringMenu = false;
+    checkMenuStatus();
+});
 </script>
 </body>
 </html>
