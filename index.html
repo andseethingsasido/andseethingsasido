@@ -42,69 +42,95 @@ body { padding-top: 100px; padding-bottom: 24px; }
     transform: scale(1.03);
 }
 
-/* 右侧汉堡菜单按钮（三条杠） */
-.menu-trigger {
+/* ✟ 菜单包裹容器，用于处理 Hover 逻辑 ✟ */
+.menu-wrapper {
     position: absolute;
     right: 40px;
-    width: 28px;
-    height: 20px;
+    top: 0;
+    height: 80px; /* 与 header 同高 */
+    display: flex;
+    align-items: center; /* 垂直居中三条杠 */
+    z-index: 10002;
+}
+
+/* 汉堡菜单按钮（三条杠）- 缩小尺寸 */
+.menu-trigger {
+    width: 20px; /* 缩小宽度 */
+    height: 14px; /* 缩小高度 */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
-    z-index: 10002;
 }
 .menu-trigger span {
     display: block;
     width: 100%;
     height: 1px; /* 极致纤细的切线 */
     background: #fff;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s, background 0.3s;
 }
-/* 三条杠形变为 ✕ 的动态视觉 */
-.menu-trigger.active span:nth-child(1) { transform: translateY(9.5px) rotate(45deg); }
-.menu-trigger.active span:nth-child(2) { opacity: 0; }
-.menu-trigger.active span:nth-child(3) { transform: translateY(-9.5px) rotate(-45deg); }
 
-/* ✟ 从上往下滑动的幕布式全屏菜单 ✟ */
-#fullscreen-menu {
-    position: fixed;
-    top: -100%; /* 初始隐藏在屏幕上方 */
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #000; /* 高级深邃纯黑 */
-    z-index: 10001;
-    transition: top 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    justify-content: flex-end; /* 内容靠右对齐 */
-    align-items: center;
+/* ✟ 下拉菜单栏 ✟ */
+#dropdown-menu {
+    position: absolute;
+    top: 80px; /* 紧贴 header 底部 */
+    right: -20px; /* 往右侧稍微偏移，让主体在杠子下方偏左 */
+    width: 120px; /* 设置合适宽度 */
+    /* 初始隐藏状态：上滑并透明 */
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-20px); 
+    
+    /* 这里你可以自己上传照片，目前为白色背景 */
+    background: #fff; 
+    /* background-image: url('你的照片地址.jpg'); background-size: cover; */
+    
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     box-sizing: border-box;
-    padding-right: 10%; /* 距离右侧的黄金比例间距 */
-}
-#fullscreen-menu.open {
-    top: 0; /* 滑动下落铺满屏幕 */
+    /* 上部对齐文字，底部留出余量 */
+    padding: 20px 20px 40px 20px; 
+    z-index: 10001;
 }
 
-/* 菜单右侧按钮载体 */
+/* ✟ 核心 Hover 交互逻辑 ✟ */
+/* 当鼠标悬停在包裹容器上时 */
+.menu-wrapper:hover #dropdown-menu {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0); /* 滑动下落 */
+}
+
+/* Hover 时三条杠变色，适应白色背景菜单 */
+.menu-wrapper:hover .menu-trigger span {
+    background: #000;
+}
+
+/* 三条杠形变为 ✕ 的动态视觉 - 依然保留，作为悬停反馈 */
+.menu-wrapper:hover .menu-trigger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.menu-wrapper:hover .menu-trigger span:nth-child(2) { opacity: 0; }
+.menu-wrapper:hover .menu-trigger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+
+/* 菜单内部按钮载体 */
 .menu-links {
     display: flex;
     flex-direction: column;
-    gap: 35px;
-    text-align: right;
+    gap: 15px;
+    text-align: left; /* 文字左对齐 */
 }
 .menu-item {
-    font-size: 24px;
-    font-weight: 200;
-    letter-spacing: 4px;
-    color: #888;
+    font-size: 14px; /* 调小文字，与三条杠比例一致 */
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: #666; /* 适应白色背景 */
     cursor: pointer;
     transition: color 0.3s, transform 0.3s;
     text-transform: uppercase;
+    white-space: nowrap; /* 防止文字换行 */
 }
 .menu-item:hover {
-    color: #fff;
-    transform: translateX(-5px); /* 悬停时向左微调，极具动感 */
+    color: #000; /* 悬停变深 */
+    transform: translateX(3px); /* 悬停时向右微调 */
 }
 
 /* A-F 3个一组矩阵 */
@@ -143,19 +169,26 @@ body { padding-top: 100px; padding-bottom: 24px; }
 </style></head>
 <body>
 
+<!-- ✟ ERD 透明顶部导航栏 ✟ -->
 <div id="header">
     <img src="and.png" class="logo-btn" onclick="location.href='https://andseethingsasido.github.io/'">
-    <div class="menu-trigger" id="menuTrigger">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-</div>
-
-<div id="fullscreen-menu" id="fullscreenMenu">
-    <div class="menu-links">
-        <div class="menu-item" onclick="toggleMenu(); location.href='https://andseethingsasido.github.io/and666/'">商品</div>
-        <div class="menu-item" onclick="toggleMenu(); mask.style.display='flex'">公众号</div>
+    
+    <!-- 菜单包裹容器 -->
+    <div class="menu-wrapper">
+        <!-- 三条杠 -->
+        <div class="menu-trigger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <!-- ✟ 下拉菜单栏 ✟ -->
+        <div id="dropdown-menu">
+            <div class="menu-links">
+                <div class="menu-item" onclick="location.href='https://andseethingsasido.github.io/and666/'">商品</div>
+                <div class="menu-item" onclick="mask.style.display='flex'">公众号</div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -163,6 +196,7 @@ body { padding-top: 100px; padding-bottom: 24px; }
 <img id="gifBottom" src="and777.gif">
 <img id="dao" src="dao.png">
 
+<!-- A-F 矩阵 -->
 <div class="brand-section">
     <div class="brand-tag">A</div>
     <div class="brand-tag">B</div>
@@ -178,26 +212,7 @@ body { padding-top: 100px; padding-bottom: 24px; }
 
 <script>
 gifBottom.onclick=()=>location.href="https://andseethingsasido.github.io/and666/";
-
-// ==========================================
-// 🛠️ 全屏菜单滑出与控制引擎
-// ==========================================
-const menuTrigger = document.getElementById('menuTrigger');
-const fullscreenMenu = document.getElementById('fullscreen-menu');
-
-function toggleMenu() {
-    menuTrigger.classList.toggle('active');
-    fullscreenMenu.classList.toggle('open');
-    
-    // 打开菜单时禁止主页面滚动，关闭时恢复
-    if(fullscreenMenu.classList.contains('open')) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = 'auto';
-    }
-}
-
-menuTrigger.addEventListener('click', toggleMenu);
+// 移除了 JS 控制菜单点击的代码，现在全部由 CSS Hover 处理
 </script>
 </body>
 </html>
