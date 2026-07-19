@@ -91,28 +91,28 @@ img{user-select:none;-webkit-user-drag:none}
 }
 
 /* ==========================================================
-   📱 仅移动端生效的独立尺寸 (保持 30px)
+   📱 仅移动端生效的独立尺寸 (30px - 5px = 25px)
    ========================================================== */
 @media (max-width: 768px) {
-    body { padding-top: 65px; padding-bottom: 24px; }
-    #header { height: 50px; }
-    .logo-btn { height: 30px; } /* 移动端保持 30px */
-    .menu-trigger { height: 50px; }
+    body { padding-top: 60px; padding-bottom: 24px; }
+    #header { height: 45px; }
+    .logo-btn { height: 25px; } /* 移动端锁定 25px */
+    .menu-trigger { height: 45px; }
     .menu-trigger-icon { width: 22px; height: 13px; }
-    #dropdown-menu { padding: 75px 40px 35px; }
+    #dropdown-menu { padding: 70px 40px 35px; }
 }
 
 /* ==========================================================
-   💻 仅 PC 端生效的独立尺寸 (精准缩小二分之一)
+   💻 仅 PC 端生效的独立尺寸 (45px - 5px = 40px)
    ========================================================== */
 @media (min-width: 769px) {
-    body { padding-top: 90px; padding-bottom: 24px; }
+    body { padding-top: 85px; padding-bottom: 24px; }
     #gifTop { width: 53%; max-width: 600px; }
-    #header { height: 65px; }
-    .logo-btn { height: 45px; } /* PC端缩小至原先的二分之一 (45px) */
-    .menu-trigger { height: 65px; }
+    #header { height: 60px; }
+    .logo-btn { height: 40px; } /* PC 端缩短至 40px */
+    .menu-trigger { height: 60px; }
     .menu-trigger-icon { width: 22px; height: 14px; }
-    #dropdown-menu { padding: 95px 40px 35px; }
+    #dropdown-menu { padding: 90px 40px 35px; }
 }
 
 /* 菜单内部按钮载体 */
@@ -298,7 +298,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// 监听滚动：滑动菜单栏之外的区域时自动收起
+// 监听滚动：当菜单打开时，如果滑动菜单栏之外的网站区域，菜单栏自动收起
 window.addEventListener('scroll', () => {
     if (menu.classList.contains('show')) {
         closeMenu();
