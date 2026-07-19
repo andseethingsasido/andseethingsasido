@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Welcome</title>
+
     <style>
-        /* 1. 核心布局修改 */
         html, body {
             margin: 0;
             padding: 0;
@@ -13,47 +13,47 @@
             height: 100%;
             background-color: #000000;
             display: flex;
-            flex-direction: column; /* 垂直排列 */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            /* 已经移除 body 上的全局 pointer 手型，防止空白区域误导点击 */
         }
 
-        /* 2. 图片通用样式修改 */
         img {
-            max-width: 80%;  /* 调整图片最大宽度 */
-            max-height: 45%; /* 防止两张图加起来把屏幕撑爆 */
+            max-width: 80%;
+            max-height: 28%;
             border-radius: 4px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
             user-select: none;
             -webkit-user-drag: none;
-            margin: 10px 0; /* 上下两张图之间留出 10 像素的全黑空隙 */
+            margin: 10px 0;
         }
 
-        /* 3. 单独为第二张可点击的 GIF 赋予手型提示 */
+        /* 第二张GIF可点击 */
         #gifBottom {
             cursor: pointer;
         }
     </style>
 </head>
+
 <body>
 
-    <!-- 顶层的 GIF -->
+    <!-- 第一张GIF -->
     <img id="gifTop" src="and666.gif" alt="Live View Top">
 
-    <!-- 底层的 GIF （点击这张图将会触发跳转） -->
+    <!-- 第二张GIF（可点击） -->
     <img id="gifBottom" src="and777.gif" alt="Live View Bottom">
 
+    <!-- 第三张PNG -->
+    <img id="dao" src="dao.png" alt="DAO">
+
     <script>
-        // 取消了全页面点击跳转，改为精准监听第二张 GIF (and777.gif)
-        const gifBottom = document.getElementById('gifBottom');
-        
-        gifBottom.addEventListener('click', function(event) {
-            // 阻止事件冒泡（安全防护）
+        // 点击第二张GIF跳转
+        const gifBottom = document.getElementById("gifBottom");
+
+        gifBottom.addEventListener("click", function(event) {
             event.stopPropagation();
-            // 精准跳转到指定的新目的地
-            window.location.href = "https://andseethingsasido.github.io/and666/"; 
+            window.location.href = "https://andseethingsasido.github.io/and666/";
         });
     </script>
 
