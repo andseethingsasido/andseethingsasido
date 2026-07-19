@@ -78,7 +78,8 @@ img{user-select:none;-webkit-user-drag:none}
     opacity: 0;
     transform: translateY(-100%); 
     background: #fff; 
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    /* 优化过渡曲线：确保收回(transition-out)与展开(transition-in)拥有完全一致的速度与节奏 */
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.35s linear, visibility 0.35s linear;
     box-sizing: border-box;
     z-index: 10001;
     display: flex;
@@ -91,28 +92,28 @@ img{user-select:none;-webkit-user-drag:none}
 }
 
 /* ==========================================================
-   📱 仅移动端生效的独立尺寸 (30px - 5px = 25px)
+   📱 仅移动端生效的独立尺寸 (25px - 5px = 20px)
    ========================================================== */
 @media (max-width: 768px) {
-    body { padding-top: 60px; padding-bottom: 24px; }
-    #header { height: 45px; }
-    .logo-btn { height: 25px; } /* 移动端锁定 25px */
-    .menu-trigger { height: 45px; }
+    body { padding-top: 55px; padding-bottom: 24px; }
+    #header { height: 40px; }
+    .logo-btn { height: 20px; } /* 移动端锁定 20px */
+    .menu-trigger { height: 40px; }
     .menu-trigger-icon { width: 22px; height: 13px; }
-    #dropdown-menu { padding: 70px 40px 35px; }
+    #dropdown-menu { padding: 65px 40px 35px; }
 }
 
 /* ==========================================================
-   💻 仅 PC 端生效的独立尺寸 (45px - 5px = 40px)
+   💻 仅 PC 端生效的独立尺寸 (40px - 5px = 35px)
    ========================================================== */
 @media (min-width: 769px) {
-    body { padding-top: 85px; padding-bottom: 24px; }
+    body { padding-top: 80px; padding-bottom: 24px; }
     #gifTop { width: 53%; max-width: 600px; }
-    #header { height: 60px; }
-    .logo-btn { height: 40px; } /* PC 端缩短至 40px */
-    .menu-trigger { height: 60px; }
+    #header { height: 55px; }
+    .logo-btn { height: 35px; } /* PC 端缩短至 35px */
+    .menu-trigger { height: 55px; }
     .menu-trigger-icon { width: 22px; height: 14px; }
-    #dropdown-menu { padding: 90px 40px 35px; }
+    #dropdown-menu { padding: 85px 40px 35px; }
 }
 
 /* 菜单内部按钮载体 */
