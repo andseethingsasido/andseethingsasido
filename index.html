@@ -12,55 +12,55 @@ img{user-select:none;-webkit-user-drag:none}
 #gifBottom{max-width:80%;max-height:45vh;border-radius:6px;box-shadow:0 0 20px rgba(255,255,255,.12);margin:12px 0;cursor:pointer}
 #dao{width:80%;max-width:900px;margin:24px 0 40px;box-shadow:none;border-radius:0}
 
-/* ✟ 哥特尖锐重工可拖拽 Dock 栏 ✟ */
+/* ✟ 淡雅而冷冽的重工可拖拽 Dock 栏 ✟ */
 #dock {
     position: fixed;
-    left: 24px; /* 初始位置往中间多挪，完全显露 */
+    left: 24px;
     top: 30%;
-    background: rgba(10, 10, 12, 0.85);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-left: 3px solid #fff; /* 极简白色切线 */
-    border-radius: 0px; /* 绝对直角，摒弃圆角 */
+    background: rgba(15, 15, 18, 0.4); /* 极淡雅的半透明黑色基底 */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1); /* 低调微弱的边框线 */
+    border-radius: 0px; /* 坚守绝对直角 */
     padding: 10px;
     display: flex;
     flex-direction: column;
     gap: 12px;
     z-index: 999;
     width: 62px;
-    height: 62px; /* 初始高度：只容纳第一个按钮 */
+    height: 62px; /* 初始高度精确裁剪，隐匿底层按钮 */
     overflow: hidden;
-    cursor: move; /* 提示可拖拽 */
+    cursor: move;
     transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, border-color 0.3s;
 }
 
-/* 激活或悬停时向下伸展 */
+/* 鼠标悬停时优雅展开并浮现层次 */
 #dock:hover {
-    height: 222px; /* 精准容纳 3 个项目 (62*3) + gap*2 (24) + padding (20) */
-    background: rgba(4, 4, 5, 0.98);
-    border-color: rgba(255, 255, 255, 0.6);
+    height: 222px; 
+    background: rgba(8, 8, 10, 0.95);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .item {
     width: 62px;
     height: 62px;
-    border-radius: 0px; /* 绝对直角 */
-    background: #111113;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0px;
+    background: #0a0a0c;
+    border: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     overflow: hidden;
-    transition: background 0.3s, border-color 0.3s, transform 0.2s;
-    color: #fff;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+    color: #666; /* 初始文字呈低反差暗灰色 */
     font-size: 13px;
     font-weight: 300;
     letter-spacing: 2px;
-    writing-mode: vertical-lr; /* 文字竖排，更具解构感 */
+    writing-mode: vertical-lr;
     text-orientation: mixed;
 }
+/* 鼠标滑过单个选项时的刀锋反色 */
 .item:hover {
     background: #fff;
     color: #000;
@@ -72,45 +72,44 @@ img{user-select:none;-webkit-user-drag:none}
     object-fit: cover;
 }
 
-/* 先锋品牌文本美学区 */
+/* 先锋极简字母矩阵美学区 */
 .brand-section {
     width: 80%;
     max-width: 900px;
     margin: 20px 0 60px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
 }
 .brand-tag {
-    font-size: 16px;
-    font-weight: 300;
-    letter-spacing: 3px;
-    color: #555;
-    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 200;
+    letter-spacing: 1px;
+    color: #444; /* 深邃内敛的无名灰 */
     text-align: center;
-    padding: 16px;
+    padding: 20px;
     border: 1px solid rgba(255, 255, 255, 0.02);
-    transition: color 0.5s, border-color 0.5s, background 0.5s;
+    transition: color 0.4s, border-color 0.4s, background 0.4s;
 }
 .brand-tag:hover {
     color: #fff;
-    border-color: rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.02);
 }
 
-/* 弹窗遮罩同样硬核黑化 */
+/* 遮罩面板黑化 */
 #mask {display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(15px);justify-content:center;align-items:center;z-index:9999}
-#card {background:#0a0a0c;padding:30px;border-radius:0px;border:1px solid rgba(255,255,255,0.2);position:relative}
+#card {background:#0a0a0c;padding:30px;border-radius:0px;border:1px solid rgba(255,255,255,0.15);position:relative}
 #card img {width:min(80vw,320px);filter: grayscale(100%); transition: filter 0.3s}
 #card img:hover {filter: grayscale(0%)}
-#close {position:absolute;right:12px;top:8px;font-size:20px;font-weight:200;cursor:pointer;color:#888}
+#close {position:absolute;right:12px;top:8px;font-size:20px;font-weight:200;cursor:pointer;color:#666}
 #close:hover {color:#fff}
 </style></head>
 <body>
 
 <!-- ✟ 先锋重工可拖拽伸展 Dock ✟ -->
-<div id="dock" id="draggableDock">
-<div class="item"><img src="button1.png"></div>
+<div id="dock">
+<div class="item"><img src="and.png"></div> <!-- 照片名字已更新为 and.png -->
 <div class="item" onclick="location.href='https://andseethingsasido.github.io/and666/'">商品</div>
 <div class="item" onclick="mask.style.display='flex'">公众号</div>
 </div>
@@ -119,14 +118,14 @@ img{user-select:none;-webkit-user-drag:none}
 <img id="gifBottom" src="and777.gif">
 <img id="dao" src="dao.png">
 
-<!-- 注入黑暗高街血统的品牌矩阵 -->
+<!-- A-F 极简极静矩阵 -->
 <div class="brand-section">
-    <div class="brand-tag">Rick Owens</div>
-    <div class="brand-tag">Chrome Hearts</div>
-    <div class="brand-tag">Balenciaga Campaign</div>
-    <div class="brand-tag">Vetements</div>
-    <div class="brand-tag">Alyx</div>
-    <div class="brand-tag">Enfants Riches Déprimés</div>
+    <div class="brand-tag">A</div>
+    <div class="brand-tag">B</div>
+    <div class="brand-tag">C</div>
+    <div class="brand-tag">D</div>
+    <div class="brand-tag">E</div>
+    <div class="brand-tag">F</div>
 </div>
 
 <div id="mask" onclick="if(event.target===this)this.style.display='none'">
@@ -137,7 +136,7 @@ img{user-select:none;-webkit-user-drag:none}
 gifBottom.onclick=()=>location.href="https://andseethingsasido.github.io/and666/";
 
 // ==========================================
-// 🛠️ 暗黑先锋物理拖拽引擎（兼容PC与移动端）
+// 🛠️ 纯净物理拖拽引擎（完美剥离点击噪音）
 // ==========================================
 const dock = document.getElementById('dock');
 let isDragging = false;
@@ -145,7 +144,6 @@ let startX, startY, initialLeft, initialTop;
 let hasMoved = false;
 
 function dragStart(e) {
-    // 允许通过点击子代按钮正常触发事件
     hasMoved = false;
     isDragging = true;
     
@@ -158,7 +156,6 @@ function dragStart(e) {
     initialLeft = rect.left;
     initialTop = rect.top;
     
-    // 拖动时临时关闭过渡，防止产生拖动滞后感
     dock.style.transition = 'none';
 }
 
@@ -175,7 +172,6 @@ function dragMove(e) {
         hasMoved = true;
     }
     
-    // 计算移动坐标并直接应用
     dock.style.left = (initialLeft + dx) + 'px';
     dock.style.top = (initialTop + dy) + 'px';
 }
@@ -184,21 +180,17 @@ function dragEnd(e) {
     if (!isDragging) return;
     isDragging = false;
     
-    // 恢复伸展时的贝塞尔过渡曲线
     dock.style.transition = 'height 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, border-color 0.3s';
     
-    // 如果发生了明显的拖拽位移，阻止其触发原本的点击逻辑
     if (hasMoved) {
         e.preventDefault();
     }
 }
 
-// 绑定鼠标事件
 dock.addEventListener('mousedown', dragStart);
 document.addEventListener('mousemove', dragMove);
 document.addEventListener('mouseup', dragEnd);
 
-// 绑定触屏事件
 dock.addEventListener('touchstart', dragStart, { passive: true });
 document.addEventListener('touchmove', dragMove, { passive: false });
 document.addEventListener('touchend', dragEnd);
