@@ -16,45 +16,53 @@ html, body {
     flex-direction: column;
     align-items: center;
 
-    /* 允许上下滚动 */
+    /* 允许上下滑动 */
     overflow-y: auto;
     overflow-x: hidden;
-
-    /* 滚动更顺滑 */
     scroll-behavior: smooth;
 }
 
-/* 第一、第二张图片 */
-img {
-    width: 80%;
-    max-width: 900px;
-    border-radius: 4px;
-    box-shadow: 0 0 20px rgba(255,255,255,.1);
-    user-select: none;
-    -webkit-user-drag: none;
-    margin: 12px 0;
+/* 通用设置 */
+img{
+    user-select:none;
+    -webkit-user-drag:none;
 }
 
-/* 第二张可点击 */
+/* 第一张 GIF */
+#gifTop{
+    width:80%;
+    max-width:900px;
+    height:auto;
+    border-radius:4px;
+    box-shadow:0 0 20px rgba(255,255,255,.1);
+    margin:12px 0;
+}
+
+/* 第二张 GIF（恢复原来的尺寸） */
 #gifBottom{
+    max-width:80%;
+    max-height:45vh;
+    width:auto;
+    height:auto;
+    border-radius:4px;
+    box-shadow:0 0 20px rgba(255,255,255,.1);
+    margin:12px 0;
     cursor:pointer;
 }
 
-/* 第三张 dao.png */
+/* 第三张 PNG */
 #dao{
     width:80%;
     max-width:900px;
     height:auto;
 
-    /* 去掉边框效果 */
     border:none;
     border-radius:0;
     box-shadow:none;
 
-    margin:25px 0 40px 0;
+    margin:25px 0 40px;
 }
 </style>
-
 </head>
 
 <body>
