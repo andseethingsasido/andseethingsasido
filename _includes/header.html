@@ -1,5 +1,5 @@
 <!-- ==========================================================
-   ✟ GOTHIC MINK HANDHELD NAVIGATION HEADER ✟
+   ✟ GOTHIC LUXURY HANDHELD NAVIGATION HEADER ✟
    ========================================================== -->
 
 <!-- 1. 结构层 (HTML) -->
@@ -8,11 +8,13 @@
     <img class="logo-btn" 
          src="{{ '/images/logo.png' | relative_url }}" 
          alt="LOGO" 
+         id="headerLogoBtn"
          onclick="window.location.href='{{ '/' | relative_url }}'">
 
-    <!-- 右侧汉堡菜单触发器 -->
-    <div class="menu-trigger" id="menuTrigger" onclick="toggleMenu()">
+    <!-- 右侧汉堡菜单触发器（升级为三条杠） -->
+    <div class="menu-trigger" id="menuTrigger">
         <div class="menu-trigger-icon">
+            <span></span>
             <span></span>
             <span></span>
         </div>
@@ -28,7 +30,7 @@
     </nav>
 </header>
 
-<!-- 2. 样式层 (CSS) - 完美内嵌，引入即生效 -->
+<!-- 2. 样式层 (CSS) -->
 <style>
     #header {
         position: fixed;
@@ -51,7 +53,7 @@
         z-index: 10003;
         transition: transform 0.3s, filter 0.3s; 
     }
-    .logo-btn:hover { transform: scale(1.03); }
+    .logo-btn:hover { transform: scale(1.02); }
     .logo-btn.active { filter: invert(1); }
 
     .menu-trigger {
@@ -63,8 +65,21 @@
         z-index: 10002;
         cursor: pointer;
     }
-    .menu-trigger-icon { display: flex; flex-direction: column; }
-    .menu-trigger-icon span { display: block; width: 100%; background: #fff; transition: background 0.3s; }
+    
+    /* 三条杠结构体 */
+    .menu-trigger-icon { 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: space-between;
+    }
+    .menu-trigger-icon span { 
+        display: block; 
+        width: 100%; 
+        background: #fff; 
+        transition: background 0.3s, transform 0.3s; 
+    }
+    
+    /* 激活后变为奢侈品黑 */
     .menu-trigger.active .menu-trigger-icon span { background: #000; }
 
     #dropdown-menu {
@@ -74,7 +89,7 @@
         width: 100%;
         transform: translateY(-100%); 
         background: #fff; 
-        transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         box-sizing: border-box;
         z-index: 10001;
         display: flex;
@@ -82,58 +97,139 @@
     }
     #dropdown-menu.show { transform: translateY(0); }
 
-    .menu-links { display: flex; flex-direction: column; gap: 20px; }
+    .menu-links { display: flex; flex-direction: column; gap: 24px; }
+    
+    /* 👑 顶级奢侈品官网视觉：简约、极客、几何厚重感 */
     .menu-item {
-        font-family: "Cinzel", "Didot", "Helvetica Neue", Arial, sans-serif;
-        font-size: 18px; 
-        font-weight: 600; 
-        letter-spacing: 6px; 
-        color: #555; 
+        font-family: "Helvetica Neue", Helvetica, Arial, -apple-system, sans-serif;
+        font-size: 15px; 
+        font-weight: 700; 
+        letter-spacing: 0.15em; 
+        color: #666; 
         cursor: pointer;
-        transition: color 0.3s, transform 0.3s;
+        transition: color 0.25s ease;
         text-transform: uppercase;
         white-space: nowrap;
         transform-origin: right center; 
     }
-    .menu-item:hover { color: #000; transform: scale(1.03); }
+    .menu-item:hover { color: #000; }
 
     /* 响应式断点控制 */
     @media (max-width: 768px) {
         #header { height: 40px; padding: 0 20px; }
         .logo-btn { height: 20px; } 
         .menu-trigger { height: 40px; right: 20px; }
-        .menu-trigger-icon { width: 16px; }
-        .menu-trigger-icon span { height: 1px; margin-bottom: 4px; }
-        .menu-trigger-icon span:last-child { margin-bottom: 0; }
-        #dropdown-menu { padding: 65px 20px 35px; }
+        .menu-trigger-icon { width: 18px; height: 10px; }
+        .menu-trigger-icon span { height: 1.5px; }
+        #dropdown-menu { padding: 70px 20px 40px; }
     }
     @media (min-width: 769px) {
         #header { height: 55px; }
         .logo-btn { height: 35px; } 
         .menu-trigger { height: 55px; }
-        .menu-trigger-icon { width: 22px; } 
-        .menu-trigger-icon span { height: 2px; margin-bottom: 4px; } 
-        .menu-trigger-icon span:last-child { margin-bottom: 0; }
-        #dropdown-menu { padding: 85px 40px 35px; }
+        .menu-trigger-icon { width: 24px; height: 13px; } 
+        .menu-trigger-icon span { height: 2px; }
+        #dropdown-menu { padding: 90px 40px 45px; }
     }
 </style>
 
 <!-- 3. 行为层 (JavaScript) -->
 <script>
-    function toggleMenu() {
-        const trigger = document.getElementById('menuTrigger');
-        const menu = document.getElementById('dropdown-menu');
-        const logo = document.querySelector('.logo-btn');
-        
-        trigger.classList.toggle('active');
-        menu.classList.toggle('show');
-        if(logo) logo.classList.toggle('active');
+    const trigger = document.getElementById('menuTrigger');
+    const menu = document.getElementById('dropdown-menu');
+    const logo = document.getElementById('headerLogoBtn');
+
+    let isHoveringTrigger = false;
+    let isHoveringMenu = false;
+    let isHoveringLogo = false;
+    let isClickOpen = false; // 用于判定移动端显式点击状态
+
+    function openMenu() {
+        menu.classList.add('show');
+        trigger.classList.add('active');
+        if(logo) logo.classList.add('active');
     }
 
+    function closeMenu() {
+        menu.classList.remove('show');
+        trigger.classList.remove('active');
+        if(logo) logo.classList.remove('active');
+        isClickOpen = false;
+    }
+
+    // PC端安全延迟检查机制：当且仅当鼠标完全离开相关白区元素时自动闭合
+    function checkMenuStatus() {
+        setTimeout(() => {
+            if (!isHoveringTrigger && !isHoveringMenu && !isHoveringLogo && !isClickOpen) {
+                closeMenu();
+            }
+        }, 30);
+    }
+
+    // ==========================================
+    // 💻 PC 端：智能悬浮与防滑出边界检测引擎
+    // ==========================================
+    if (window.innerWidth >= 769) {
+        trigger.addEventListener('mouseenter', () => {
+            isHoveringTrigger = true;
+            openMenu();
+        });
+        trigger.addEventListener('mouseleave', () => {
+            isHoveringTrigger = false;
+            checkMenuStatus();
+        });
+
+        menu.addEventListener('mouseenter', () => {
+            isHoveringMenu = true;
+        });
+        menu.addEventListener('mouseleave', () => {
+            isHoveringMenu = false;
+            checkMenuStatus();
+        });
+
+        if (logo) {
+            logo.addEventListener('mouseenter', () => {
+                isHoveringLogo = true;
+                if (menu.classList.contains('show')) openMenu();
+            });
+            logo.addEventListener('mouseleave', () => {
+                isHoveringLogo = false;
+                checkMenuStatus();
+            });
+        }
+    }
+
+    // ==========================================
+    // 📱 移动端与全域点击/滑动闭合引擎
+    // ==========================================
+    // 兼容两端的显式点击切换
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (menu.classList.contains('show')) {
+            closeMenu();
+        } else {
+            isClickOpen = true;
+            openMenu();
+        }
+    });
+
+    // 1. 移动端/网页全域滑动：只要滑动菜单栏之外的区域，自动收起
+    window.addEventListener('scroll', () => {
+        if (menu.classList.contains('show')) {
+            closeMenu();
+        }
+    }, { passive: true });
+
+    // 2. 全局点击拦截：点击菜单白区以外的任何区域自动收起
+    document.addEventListener('click', (e) => {
+        if (menu.classList.contains('show') && !menu.contains(e.target) && !trigger.contains(e.target)) {
+            closeMenu();
+        }
+    });
+
+    // 公众号特殊唤起函数
     function openWeChatCard() {
-        // 先关闭菜单
-        toggleMenu();
-        // 唤起主页面上的公共遮罩弹窗
+        closeMenu();
         const mask = document.getElementById('mask');
         if (mask) {
             mask.style.display = 'flex';
