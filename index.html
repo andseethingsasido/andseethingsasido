@@ -110,22 +110,20 @@ img{user-select:none;-webkit-user-drag:none}
     .menu-trigger-icon { width: 22px; } 
     .menu-trigger-icon span { height: 2px; margin-bottom: 4px; } 
     .menu-trigger-icon span:last-child { margin-bottom: 0; }
-    #dropdown-menu { padding: 85px 40px 35px; }
+    #dropdown-menu { padding: 95px 40px 45px; } /* 微调了底部留白以适应大字号 */
 }
 
 /* 菜单内部按钮载体 */
 .menu-links {
     display: flex;
     flex-direction: column;
-    gap: 20px; 
-    text-align: right; 
+    gap: 24px; /* 字体增大后，稍微拉开字行距，更显高级疏朗 */
 }
 .menu-item {
-    /* 🛠 替换为奢侈品官网常用的简约高级感加粗排版 */
     font-family: "Cinzel", "Didot", "Helvetica Neue", Arial, -apple-system, sans-serif;
-    font-size: 14px; 
+    font-size: 28px; /* 🛠 完美等比例放大一倍（原14px） */
     font-weight: 600; 
-    letter-spacing: 5px; 
+    letter-spacing: 10px; /* 🛠 字间距同步放大一倍（原5px）确保高级感排版不散架 */
     color: #555; 
     cursor: pointer;
     transition: color 0.3s, transform 0.3s;
@@ -167,7 +165,7 @@ img{user-select:none;-webkit-user-drag:none}
 /* 弹窗遮罩 */
 #mask {display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);justify-content:center;align-items:center;z-index:100003}
 
-/* 弹出卡片样式 🛠 尺寸缩小二分之一 */
+/* 弹出卡片样式 */
 #card {
     background: #0a0a0c;
     padding: 15px;
@@ -179,7 +177,7 @@ img{user-select:none;-webkit-user-drag:none}
     align-items: center;
 }
 #card img {
-    width: min(40vw, 160px); /* 🛠 宽度由原来的 320px 缩减至 160px */
+    width: min(40vw, 160px); 
     filter: grayscale(100%); 
     transition: filter 0.3s;
 }
