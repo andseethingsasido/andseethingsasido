@@ -11,7 +11,7 @@
          id="headerLogoBtn"
          onclick="window.location.href='{{ '/' | relative_url }}'">
 
-    <!-- 右侧汉堡菜单触发器（升级为三条杠） -->
+    <!-- 右侧汉堡菜单触发器 -->
     <div class="menu-trigger" id="menuTrigger">
         <div class="menu-trigger-icon">
             <span></span>
@@ -23,9 +23,10 @@
     <!-- 全屏/下拉遮罩菜单 -->
     <nav id="dropdown-menu">
         <div class="menu-links">
-            <span class="menu-item" onclick="window.location.href='{{ '/' | relative_url }}'">HOME</span>
-            <span class="menu-item" onclick="openWeChatCard()">WECHAT</span>
-            <span class="menu-item" onclick="window.location.href='{{ '/archive.html' | relative_url }}'">ARCHIVE</span>
+            <!-- 商店跳转链接 -->
+            <span class="menu-item" onclick="window.location.href='https://andseethingsasido.github.io/and666/'">商店</span>
+            <!-- 公众号唤起弹窗 -->
+            <span class="menu-item" onclick="openWeChatCard()">公众号</span>
         </div>
     </nav>
 </header>
@@ -66,7 +67,6 @@
         cursor: pointer;
     }
     
-    /* 三条杠结构体 */
     .menu-trigger-icon { 
         display: flex; 
         flex-direction: column; 
@@ -79,7 +79,6 @@
         transition: background 0.3s, transform 0.3s; 
     }
     
-    /* 激活后变为奢侈品黑 */
     .menu-trigger.active .menu-trigger-icon span { background: #000; }
 
     #dropdown-menu {
@@ -97,9 +96,16 @@
     }
     #dropdown-menu.show { transform: translateY(0); }
 
-    .menu-links { display: flex; flex-direction: column; gap: 24px; }
+    /* 🎯 关键修改：强力右对齐容器，确保与三条杠右边缘完美贴合 */
+    .menu-links { 
+        display: flex; 
+        flex-direction: column; 
+        align-items: flex-end;
+        text-align: right;
+        gap: 24px; 
+    }
     
-    /* 👑 顶级奢侈品官网视觉：简约、极客、几何厚重感 */
+    /* 👑 奢侈品官网视觉字体 */
     .menu-item {
         font-family: "Helvetica Neue", Helvetica, Arial, -apple-system, sans-serif;
         font-size: 15px; 
@@ -108,9 +114,9 @@
         color: #666; 
         cursor: pointer;
         transition: color 0.25s ease;
-        text-transform: uppercase;
         white-space: nowrap;
-        transform-origin: right center; 
+        /* 🎯 清除多余的字间距尾部空隙，防止右对齐时产生微小错位 */
+        margin-right: -0.15em; 
     }
     .menu-item:hover { color: #000; }
 
@@ -142,7 +148,7 @@
     let isHoveringTrigger = false;
     let isHoveringMenu = false;
     let isHoveringLogo = false;
-    let isClickOpen = false; // 用于判定移动端显式点击状态
+    let isClickOpen = false;
 
     function openMenu() {
         menu.classList.add('show');
@@ -157,7 +163,6 @@
         isClickOpen = false;
     }
 
-    // PC端安全延迟检查机制：当且仅当鼠标完全离开相关白区元素时自动闭合
     function checkMenuStatus() {
         setTimeout(() => {
             if (!isHoveringTrigger && !isHoveringMenu && !isHoveringLogo && !isClickOpen) {
@@ -202,7 +207,6 @@
     // ==========================================
     // 📱 移动端与全域点击/滑动闭合引擎
     // ==========================================
-    // 兼容两端的显式点击切换
     trigger.addEventListener('click', (e) => {
         e.stopPropagation();
         if (menu.classList.contains('show')) {
@@ -213,21 +217,18 @@
         }
     });
 
-    // 1. 移动端/网页全域滑动：只要滑动菜单栏之外的区域，自动收起
     window.addEventListener('scroll', () => {
         if (menu.classList.contains('show')) {
             closeMenu();
         }
     }, { passive: true });
 
-    // 2. 全局点击拦截：点击菜单白区以外的任何区域自动收起
     document.addEventListener('click', (e) => {
         if (menu.classList.contains('show') && !menu.contains(e.target) && !trigger.contains(e.target)) {
             closeMenu();
         }
     });
 
-    // 公众号特殊唤起函数
     function openWeChatCard() {
         closeMenu();
         const mask = document.getElementById('mask');
