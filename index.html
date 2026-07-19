@@ -91,28 +91,28 @@ img{user-select:none;-webkit-user-drag:none}
 }
 
 /* ==========================================================
-   📱 仅移动端生效的独立尺寸 (精准缩小三分之一)
+   📱 仅移动端生效的独立尺寸 (保持 30px)
    ========================================================== */
 @media (max-width: 768px) {
-    body { padding-top: 60px; padding-bottom: 24px; }
-    #header { height: 45px; }
-    .logo-btn { height: 25px; } /* 从原先 90px 缩至 25px */
-    .menu-trigger { height: 45px; }
-    .menu-trigger-icon { width: 20px; height: 12px; }
-    #dropdown-menu { padding: 70px 40px 35px; }
+    body { padding-top: 65px; padding-bottom: 24px; }
+    #header { height: 50px; }
+    .logo-btn { height: 30px; } /* 移动端保持 30px */
+    .menu-trigger { height: 50px; }
+    .menu-trigger-icon { width: 22px; height: 13px; }
+    #dropdown-menu { padding: 75px 40px 35px; }
 }
 
 /* ==========================================================
-   💻 仅 PC 端生效的独立尺寸 (完美还原并保持原本尺寸)
+   💻 仅 PC 端生效的独立尺寸 (精准缩小二分之一)
    ========================================================== */
 @media (min-width: 769px) {
-    body { padding-top: 140px; padding-bottom: 24px; }
+    body { padding-top: 90px; padding-bottom: 24px; }
     #gifTop { width: 53%; max-width: 600px; }
-    #header { height: 110px; }
-    .logo-btn { height: 90px; } /* 保持原本经典大尺寸 */
-    .menu-trigger { height: 110px; }
-    .menu-trigger-icon { width: 26px; height: 16px; }
-    #dropdown-menu { padding: 140px 40px 45px; }
+    #header { height: 65px; }
+    .logo-btn { height: 45px; } /* PC端缩小至原先的二分之一 (45px) */
+    .menu-trigger { height: 65px; }
+    .menu-trigger-icon { width: 22px; height: 14px; }
+    #dropdown-menu { padding: 95px 40px 35px; }
 }
 
 /* 菜单内部按钮载体 */
@@ -166,12 +166,12 @@ img{user-select:none;-webkit-user-drag:none}
 /* 弹窗遮罩 */
 #mask {display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(15px);justify-content:center;align-items:center;z-index:100003}
 
-/* 优化后的弹出卡片样式：去除白色描边，改为纯黑色边框 */
+/* 弹出卡片样式 */
 #card {
     background: #0a0a0c;
     padding: 30px;
     border-radius: 0px;
-    border: 1px solid #000; /* 去除白边，纯黑边框 */
+    border: 1px solid #000; 
     position: relative;
 }
 #card img {width:min(80vw,320px);filter: grayscale(100%); transition: filter 0.3s}
@@ -181,10 +181,8 @@ img{user-select:none;-webkit-user-drag:none}
 
 <!-- ✟ ERD 顶部导航栏 ✟ -->
 <div id="header">
-    <!-- 靠左大 Logo -->
     <img src="logo.png" class="logo-btn" id="logoBtn" onclick="location.href='https://andseethingsasido.github.io/'">
     
-    <!-- 右侧三条杠 -->
     <div class="menu-trigger" id="menuTrigger">
         <div class="menu-trigger-icon">
             <span></span>
@@ -193,7 +191,6 @@ img{user-select:none;-webkit-user-drag:none}
         </div>
     </div>
     
-    <!-- 横向铺满下拉菜单栏 -->
     <div id="dropdown-menu" id="dropdownMenu">
         <div class="menu-links">
             <div class="menu-item" onclick="location.href='https://andseethingsasido.github.io/and666/'">商店</div>
@@ -206,7 +203,6 @@ img{user-select:none;-webkit-user-drag:none}
 <img id="gifBottom" src="and777.gif">
 <img id="dao" src="dao.png">
 
-<!-- A-F 矩阵 -->
 <div class="brand-section">
     <div class="brand-tag">A</div>
     <div class="brand-tag">B</div>
@@ -216,7 +212,6 @@ img{user-select:none;-webkit-user-drag:none}
     <div class="brand-tag">F</div>
 </div>
 
-<!-- 公众号弹窗 -->
 <div id="mask" onclick="if(event.target===this)this.style.display='none'">
     <div id="card">
         <img src="gozhonghao.jpg">
@@ -259,7 +254,6 @@ function checkMenuStatus() {
     }, 50);
 }
 
-// 监听 Logo 触碰
 logo.addEventListener('mouseenter', () => {
     isHoveringLogo = true;
     if (menu.classList.contains('show')) {
@@ -271,7 +265,6 @@ logo.addEventListener('mouseleave', () => {
     checkMenuStatus();
 });
 
-// 监听三条杠触碰
 trigger.addEventListener('mouseenter', () => {
     isHoveringTrigger = true;
     openMenu();
@@ -281,7 +274,6 @@ trigger.addEventListener('mouseleave', () => {
     checkMenuStatus();
 });
 
-// 点击三条杠逻辑
 trigger.addEventListener('click', (e) => {
     e.stopPropagation();
     if (menu.classList.contains('show') && isClickOpen) {
@@ -292,7 +284,6 @@ trigger.addEventListener('click', (e) => {
     }
 });
 
-// 监听白色菜单栏触碰
 menu.addEventListener('mouseenter', () => {
     isHoveringMenu = true;
 });
@@ -301,12 +292,18 @@ menu.addEventListener('mouseleave', () => {
     checkMenuStatus();
 });
 
-// 点击空白处收起
 document.addEventListener('click', (e) => {
     if (isClickOpen && !menu.contains(e.target) && !trigger.contains(e.target)) {
         closeMenu();
     }
 });
+
+// 监听滚动：滑动菜单栏之外的区域时自动收起
+window.addEventListener('scroll', () => {
+    if (menu.classList.contains('show')) {
+        closeMenu();
+    }
+}, { passive: true });
 </script>
 </body>
 </html>
