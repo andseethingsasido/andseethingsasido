@@ -42,8 +42,8 @@
         <!-- 弹窗哥特风标题 -->
         <div class="modal-title">Contact</div>
         
-        <!-- 二维码图片（已修正为标准动态相对路径） -->
-        <img src="{{ '/images/gongzhonghao.jpg' | relative_url }}" alt="微信二维码" class="qrcode-img">
+        <!-- 二维码图片（路径已修正为框架推荐路径） -->
+        <img src="{{ '/images/gozhonghao.jpg' | relative_url }}" alt="微信二维码" class="qrcode-img">
     </div>
 </div>
 
@@ -62,7 +62,7 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        /* 👑 核心修正：确保导航栏层级永远高于弹窗遮罩层（100003） */
+        /* 确保导航栏层级永远高于弹窗遮罩层（100003） */
         z-index: 100010; 
         box-sizing: border-box;
         padding: 0 40px;
@@ -255,7 +255,6 @@
     }
 
     function closeMenu() {
-        // 只有当弹窗未激活时，才在关闭菜单时移除 logo 和汉堡的激活状态
         menu.classList.remove('show');
         isClickOpen = false;
         
