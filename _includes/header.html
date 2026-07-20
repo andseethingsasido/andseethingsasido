@@ -32,7 +32,7 @@
 </header>
 
 <!-- ==========================================================
-   ✟ 独立弹窗组件：公众号遮罩层（已完美换上） ✟
+   ✟ 独立弹窗组件：公众号遮罩层 ✟
    ========================================================== -->
 <div class="modal-overlay" id="qrcodeModal">
     <div class="modal-content">
@@ -42,15 +42,12 @@
         <!-- 弹窗哥特风标题 -->
         <div class="modal-title">Contact</div>
         
-        <!-- 二维码图片 -->
-        <img src="gozhonghao.jpg" alt="微信二维码" class="qrcode-img">
-        
-        <!-- 底部说明文字 -->
-        <div class="modal-desc">扫描上方二维码<br>向主理人发起主线咨询或定制采购</div>
+        <!-- 二维码图片（路径已修正） -->
+        <img src="images/gongzhonghao.jpg" alt="微信二维码" class="qrcode-img">
     </div>
 </div>
 
-<!-- 2. 样式层 (CSS) - 整合了导航栏与弹窗样式 -->
+<!-- 2. 样式层 (CSS) -->
 <style>
     /* 引入高级哥特衬线字体 */
     @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
@@ -152,7 +149,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 100003; /* 确保层级高于最顶层导航 */
+        z-index: 100003; 
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.3s ease;
@@ -166,7 +163,7 @@
     .modal-content {
         background-color: #ffffff; 
         border: 1px solid #000000; /* 要求的纯黑色硬朗边框 */
-        padding: 35px; 
+        padding: 35px 35px 45px 35px; /* 底部预留舒适的呼吸空间 */
         text-align: center;
         max-width: 320px;
         width: 90%;
@@ -195,21 +192,13 @@
         width: 160px; 
         height: 160px;
         object-fit: contain;
-        margin: 0 auto 20px auto;
+        margin: 0 auto;
         display: block;
         filter: grayscale(100%); 
         transition: filter 0.3s ease;
     }
     .qrcode-img:hover { 
         filter: grayscale(0%); 
-    }
-
-    .modal-desc {
-        font-family: "Helvetica Neue", Arial, sans-serif;
-        font-size: 11px;
-        color: #666666;
-        letter-spacing: 1px;
-        line-height: 1.6;
     }
 
     .close-btn {
@@ -324,11 +313,11 @@
         }
     });
 
-    // 🔗 唤起微信弹窗核心控制逻辑（无缝匹配刚换上的组件）
+    // 🔗 唤起微信弹窗控制逻辑
     function openWeChatCard() {
-        closeMenu(); // 先收起下拉菜单
+        closeMenu(); 
         if (modal) {
-            modal.classList.add('active'); // 精确唤起新弹窗
+            modal.classList.add('active'); 
         }
     }
 
