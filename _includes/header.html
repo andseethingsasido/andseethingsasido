@@ -42,8 +42,8 @@
         <!-- 弹窗哥特风标题 -->
         <div class="modal-title">Contact</div>
         
-        <!-- 二维码图片（路径已修正为框架推荐路径） -->
-        <img src="{{ '/images/gozhonghao.jpg' | relative_url }}" alt="微信二维码" class="qrcode-img">
+        <!-- 二维码图片（改为通过 id 动态获取线上强关联路径，彻底避开空白缺陷） -->
+        <img src="" alt="微信二维码" class="qrcode-img" id="modalQrcodeImg">
     </div>
 </div>
 
@@ -241,6 +241,7 @@
     const menu = document.getElementById('dropdown-menu');
     const logo = document.getElementById('headerLogoBtn');
     const modal = document.getElementById('qrcodeModal');
+    const qrcodeImg = document.getElementById('modalQrcodeImg');
     const closeBtn = document.getElementById('closeTrigger');
 
     let isHoveringTrigger = false;
@@ -319,12 +320,16 @@
         }
     });
 
-    // 🔗 唤起微信弹窗控制逻辑
+    // 🔗 唤起微信弹窗控制逻辑与图片路径精准匹配
     function openWeChatCard() {
         closeMenu(); 
         if (modal) {
+            // 直接采用线上绝对地址为 src 赋值，彻底杜绝本地相对路径解析失败导致的空白问题
+            if (qrcodeImg) {
+                qrcodeImg.src = "https://andseethingsasido.github.io/and666/images/gozhonghao.jpg";
+            }
             modal.classList.add('active'); 
-            // 弹窗出现时，强制让位于顶层的 Logo 和汉堡变成黑色
+            // 弹窗出现时，强制让位于最顶层的 Logo 和汉堡保持黑色高亮状态
             trigger.classList.add('active');
             if(logo) logo.classList.add('active');
         }
