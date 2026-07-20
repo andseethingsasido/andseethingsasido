@@ -55,9 +55,11 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        z-index: 100010; 
+        /* 强制凌驾于弹窗（999999）之上，确保 LOGO 不被遮挡 */
+        z-index: 1000010 !important; 
         box-sizing: border-box;
         padding: 0 40px;
+        pointer-events: none; /* 防止透明的 header 阻挡网页下方的点击，让点击穿透 */
     }
 
     .logo-btn {
@@ -66,9 +68,10 @@
         position: relative;
         z-index: 10003;
         transition: transform 0.3s, filter 0.3s; 
+        pointer-events: auto; /* 恢复 LOGO 自身的点击事件 */
     }
     .logo-btn:hover { transform: scale(1.02); }
-    .logo-btn.active { filter: invert(1); }
+    .logo-btn.active { filter: invert(1) !important; } /* 确保反色拥有最高优先级 */
 
     .menu-trigger {
         position: absolute;
@@ -78,6 +81,7 @@
         align-items: center;
         z-index: 10002;
         cursor: pointer;
+        pointer-events: auto; /* 恢复菜单按钮自身的点击事件 */
     }
     
     .menu-trigger-icon { 
@@ -106,6 +110,7 @@
         z-index: 10001;
         display: flex;
         justify-content: flex-end; 
+        pointer-events: auto; /* 恢复下拉菜单内部的点击事件 */
     }
     #dropdown-menu.show { transform: translateY(0); }
 
@@ -142,7 +147,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 999999 !important; 
+        z-index: 999999 !important; /* 弹窗在次顶层 */
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.3s ease;
@@ -168,7 +173,6 @@
         justify-content: center;
         align-items: center;
         box-sizing: border-box;
-        z-index: 1000000 !important;
     }
 
     .modal-overlay.active .modal-content {
@@ -245,6 +249,7 @@
     function closeMenu() {
         menu.classList.remove('show');
         isClickOpen = false;
+        // 只有当弹窗也没有打开时，才移除导航栏图标激活状态
         if (modal && !modal.classList.contains('active')) {
             trigger.classList.remove('active');
             if(logo) logo.classList.remove('active');
@@ -286,6 +291,7 @@
         closeMenu(); 
         if (modal) {
             modal.classList.add('active'); 
+            // 弹窗出现时，强制为 LOGO 和三条杠菜单按钮加上 active 类名（触发反色）
             trigger.classList.add('active');
             if(logo) logo.classList.add('active');
         }
